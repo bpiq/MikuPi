@@ -1,1 +1,1 @@
-# MikuPi
+# MikuPi by MikuQ.com
