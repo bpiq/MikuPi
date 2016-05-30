@@ -2,10 +2,8 @@
 #define _MIKUDUINO_H_
 
 #include <stdio.h>
-#include <time.h>
+#include "MikuPi.h"
 
-void sayhello();
-void delay (unsigned int howLong);
 void setup();
 void loop();
 
