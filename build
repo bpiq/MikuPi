@@ -1,3 +1,0 @@
-gcc MikuPi.c MikuDuino.c -fPIC -shared -o libMikuDuino.so
-sudo mv libMikuDuino.so /usr/lib/
-sudo cp *.h /usr/include/
