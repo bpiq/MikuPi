@@ -1,8 +1,13 @@
 # MikuPi by MikuQ.com
 
+	git clone https://github.com/bpiq/MikuPi.git
+	cd MikuPi
+	sudo make
+
 <pre><code>
-gcc -Wall -o hello3.exe hello3.c -lMikuDuino
-./hello3.exe
+cd examples
+gcc -Wall -o blink blink.c -lMikuDuino
+sudo ./blink
 </code></pre>
 
 <pre><code>
