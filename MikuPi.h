@@ -27,6 +27,8 @@
 #define PI_MODEL_M3     5
 #define PI_MODEL_M2p    6
 
+extern const int bPinTowPin[41];
+
 #define	VERSION "0.21"
 
 extern const char *piModelNames    [7] ;
@@ -34,9 +36,43 @@ extern const char *piModelNames    [7] ;
 void delay (unsigned int howLong);
 
 void piBoardId(int *model, int *mem);
-void sayhello();
+void sayHello();
+
+void mikuPiSetup (void);
 
 void pinMode(int pin, int mode);
-void digitalWrite(pin, value);
+void digitalWrite(int pin,int value);
+
+#define SW_PORTC_IO_BASE 0x01c20800
+#define SW_PORTL_IO_BASE 0x01f02c00
+
+extern unsigned int SUNXI_PIO_BASE;
+extern unsigned int SUNXI_PIO_LM_BASE;
+
+struct sunxi_gpio {
+    unsigned int cfg[4];
+    unsigned int dat;
+    unsigned int drv[2];
+    unsigned int pull[2];
+};
+
+struct sunxi_gpio_int {
+    unsigned int cfg[3];
+    unsigned int ctl;
+    unsigned int sta;
+    unsigned int deb;
+};
+
+struct sunxi_gpio_reg {
+    struct sunxi_gpio gpio_bank[9];
+    unsigned char res[0xbc];
+    struct sunxi_gpio_int gpio_int;
+};
+
+#define GPIO_BANK(pin)	((pin) >> 5)
+#define GPIO_NUM(pin)	((pin) & 0x1F)
+
+#define GPIO_CFG_INDEX(pin)	(((pin) & 0x1F) >> 3)
+#define GPIO_CFG_OFFSET(pin)	((((pin) & 0x1F) & 0x7) << 2)
 
 #endif
