@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <unistd.h>
 #include "gpio_lib.h"
 
 // pinToGpio:
 //	Take a Wiring pin (0 through X) and re-map it to the BCM_GPIO pin
 //	Cope for 3 different board revisions here.
 
-static int *wPinToGpio ;
+//static int *wPinToGpio ;
 
 static int wPinToGpioM2p [32] =
 {
@@ -18,6 +18,7 @@ static int wPinToGpioM2p [32] =
 	10,17,354,356,  21,20,19,18
 } ;
 
+/*
 static int wPinToGpioM3 [32] =
 {
 	68,35,71,81,		34,360,361,362, 
@@ -25,8 +26,9 @@ static int wPinToGpioM3 [32] =
 	33,-1,-1,-1,		-1,82,202,203, 
 	204,132,205,133,	146,147,227,226
 } ;
+*/
 
-//static int *bPinTowPin;
+//static int *bPinTowPin; git add . git commit -a -m "gpio test" git push origin master
 
 static int bPinTowPin[41] =
 {
@@ -55,7 +57,7 @@ static int bPinTowPin[41] =
 } ;
 
 //#define PA6    SUNXI_GPA(6)  *32+6
-#define PA6    wPinToGpioM2p[bPinTowPin[36]]
+#define PA6    wPinToGpioM2p[bPinTowPin[32]]
 
 int main()
 {
@@ -76,7 +78,6 @@ int main()
         return -1;
     }
 
-    int i,j;
       while(1)	{
         if(sunxi_gpio_output(PA6,HIGH)){
             printf("Failed to set GPIO pin value\n");

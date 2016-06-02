@@ -5,6 +5,7 @@ gcc -Wall -o hello3.exe hello3.c -lMikuDuino
 ./hello3.exe
 </code></pre>
 
+<pre><code>
  +-----+-----+---------+------+---+- MikuPi -+---+------+---------+-----+-----+
  | CPU | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | CPU |
  +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
@@ -31,3 +32,4 @@ gcc -Wall -o hello3.exe hello3.c -lMikuDuino
  +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
  | CPU | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | CPU |
  +-----+-----+---------+------+---+- BPI-M3 -+---+------+---------+-----+-----+
+</code></pre>

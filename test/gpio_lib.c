@@ -40,6 +40,7 @@
 
 
 unsigned int SUNXI_PIO_BASE = 0;
+unsigned int SUNXI_PIO_LM_BASE = 0;
 static volatile long int *gpio_map = NULL;
 
 int sunxi_gpio_init(void) {
@@ -58,14 +59,21 @@ int sunxi_gpio_init(void) {
 
     addr_start = SW_PORTC_IO_BASE & PageMask;
     addr_offset = SW_PORTC_IO_BASE & ~PageMask;
-
     gpio_map = (void *)mmap(0, PageSize*2, PROT_READ|PROT_WRITE, MAP_SHARED, fd, addr_start);
     if(gpio_map == MAP_FAILED) {
         return SETUP_MMAP_FAIL;
     }
-
     SUNXI_PIO_BASE = (unsigned int)gpio_map;
     SUNXI_PIO_BASE += addr_offset;
+
+	addr_start = SW_PORTL_IO_BASE & PageMask;
+    addr_offset = SW_PORTL_IO_BASE & ~PageMask;
+	gpio_map = (void *)mmap(0, PageSize*2, PROT_READ|PROT_WRITE, MAP_SHARED, fd, addr_start);
+    if(gpio_map == MAP_FAILED) {
+        return SETUP_MMAP_FAIL;
+    }
+    SUNXI_PIO_LM_BASE = (unsigned int)gpio_map;
+    SUNXI_PIO_LM_BASE += addr_offset;
 
     close(fd);
     return SETUP_OK;
@@ -82,9 +90,11 @@ int sunxi_gpio_set_cfgpin(unsigned int pin, unsigned int val) {
         return -1;
     }
 
-    struct sunxi_gpio *pio =
-        &((struct sunxi_gpio_reg *)SUNXI_PIO_BASE)->gpio_bank[bank];
-
+	struct sunxi_gpio *pio;
+	if(bank>10)
+		pio = &((struct sunxi_gpio_reg *)SUNXI_PIO_LM_BASE)->gpio_bank[bank-11];
+	else
+		pio = &((struct sunxi_gpio_reg *)SUNXI_PIO_BASE)->gpio_bank[bank];
 
     cfg = *(&pio->cfg[0] + index);
     cfg &= ~(0xf << offset);
@@ -119,7 +129,12 @@ int sunxi_gpio_output(unsigned int pin, unsigned int val) {
     {
         return -1;
     }
-    struct sunxi_gpio *pio =&((struct sunxi_gpio_reg *)SUNXI_PIO_BASE)->gpio_bank[bank];
+
+	struct sunxi_gpio *pio;
+	if(bank>10)
+		pio = &((struct sunxi_gpio_reg *)SUNXI_PIO_LM_BASE)->gpio_bank[bank-11];
+	else
+		pio = &((struct sunxi_gpio_reg *)SUNXI_PIO_BASE)->gpio_bank[bank];
 
     if(val)
         *(&pio->dat) |= 1 << num;
