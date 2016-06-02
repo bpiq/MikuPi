@@ -38,3 +38,7 @@ sudo ./blink
  | CPU | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | CPU |
  +-----+-----+---------+------+---+- BPI-M3 -+---+------+---------+-----+-----+
 </code></pre>
+
+	git add .
+	git commit -a -m "md"
+	git push origin master
