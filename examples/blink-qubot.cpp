@@ -1,9 +1,9 @@
 /*
- * blink.c:
+ * blink-qubot.cpp:
  *
  *	Welcome to MikuQ.com! MikuDuino for BananaPi 
  *	
- *     by MikuQ(i@mikuq.com) 2016-6-2
+ *     by MikuQ(i@mikuq.com) 2016-6-3
  *	
  * https://github.com/bpiq/MikuPi
  *

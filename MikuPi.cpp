@@ -207,14 +207,14 @@ void mikuPiSetup (void)
 
     addr_start = SW_PORTC_IO_BASE & PageMask;
     addr_offset = SW_PORTC_IO_BASE & ~PageMask;
-    gpio_map = (void *)mmap(0, PageSize*2, PROT_READ|PROT_WRITE, MAP_SHARED, fd, addr_start);
+    gpio_map = (volatile long int*)mmap(0, PageSize*2, PROT_READ|PROT_WRITE, MAP_SHARED, fd, addr_start);
 
     SUNXI_PIO_BASE = (unsigned int)gpio_map;
     SUNXI_PIO_BASE += addr_offset;
 
 	addr_start = SW_PORTL_IO_BASE & PageMask;
     addr_offset = SW_PORTL_IO_BASE & ~PageMask;
-	gpio_map = (void *)mmap(0, PageSize*2, PROT_READ|PROT_WRITE, MAP_SHARED, fd, addr_start);
+	gpio_map = (volatile long int*)mmap(0, PageSize*2, PROT_READ|PROT_WRITE, MAP_SHARED, fd, addr_start);
 
     SUNXI_PIO_LM_BASE = (unsigned int)gpio_map;
     SUNXI_PIO_LM_BASE += addr_offset;
@@ -268,3 +268,4 @@ void digitalWrite(int pin, int value)
     else
         *(&pio->dat) &= ~(1 << num);
 }
+

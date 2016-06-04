@@ -1,5 +1,5 @@
 /*
- * blink.c:
+ * blink.cpp:
  *
  *	Welcome to MikuQ.com! MikuDuino for BananaPi 
  *	

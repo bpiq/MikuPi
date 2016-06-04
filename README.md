@@ -4,9 +4,11 @@
 	cd MikuPi
 	sudo make
 
+because Arduino based C++, update MikuDuino to C++, 2016-6-4
+
 <pre><code>
 cd examples
-gcc -Wall -o blink blink.c -lMikuDuino
+gcc -Wall -o blink blink.cpp -lMikuDuino
 sudo ./blink
 </code></pre>
 
