@@ -6,6 +6,17 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+/*
+ * MikuPi.cpp:
+ *
+ *	Welcome to MikuQ.com! MikuDuino for BananaPi 
+ *	
+ *     by MikuQ(i@mikuq.com)
+ *	
+ * https://github.com/bpiq/MikuPi
+ *
+ */
+
 #include "MikuPi.h"
 
 const char *piModelNames [7] =
@@ -154,7 +165,7 @@ void piBoardId(int *model, int *mem)
   }
 }
 
-void sayhello()
+void sayHello()
 {
 	int model, mem;
 	printf("Welcome to MikuQ.com! MikuDuino for BananaPi version: %s\n", VERSION);
