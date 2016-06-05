@@ -43,12 +43,28 @@ int MikuPiDebug       = FALSE;
 
 static int *wPinToGpio ;
 
+static int wPinToGpioM1p [32] =
+{
+	275,226,274,273,	244,245,272,259,
+	53,52,266,270,		268,269,267,224,
+	225,-1,-1,-1,		-1,37,38,39,
+	40,35,44,277,		276,45,257,256
+} ;
+
+static int wPinToGpioM2 [32] =
+{
+	199,234,198,201, 	235,236,200,233,
+	243,242,205, 204,	207,208,206,132,
+	133,-1,-1, -1, 		-1,32,33,34,
+	35,36,39,134,		135,290,38,37
+} ;
+
 static int wPinToGpioM2p [32] =
 {
 	1,16,0,3,		15,68,2,6, 
-	12,11,67,71,	64,65,66,13, 
-	14,-1,-1,-1,	-1,7,8,9, 
-	10,17,354,356,  21,20,19,18
+	12,11,67,71,		64,65,66,13, 
+	14,-1,-1,-1,		-1,7,8,9, 
+	10,17,354,356,  	21,20,19,18
 } ;
 
 static int wPinToGpioM3 [32] =
@@ -157,7 +173,8 @@ void piBoardId(int *model, int *mem)
   }
   else if (strstr(line,"sun7i") != NULL)
   {
-	      *model = PI_MODEL_M1;
+	//how to? M1\M1+\R1?
+	      *model = PI_MODEL_M1p;
 		  *mem = 1024;
   }
   else if (strstr(line,"sun6i") != NULL)
@@ -190,7 +207,7 @@ void sayHello()
     {
       printf ("BananaPi Details:\n") ;
       printf ("  Type: %s, Memory: %dMB\n", piModelNames [model], mem) ;
-      //printf ("  I2C Device: %s\n",i2cDevice) ;
+      printf ("  I2C Device: %s\n",i2cDevice) ;
     }
 }
 
@@ -212,13 +229,21 @@ void mikuPiSetup (void)
       piBoardRevOops ("with a copy of your /proc/cpuinfo if possible") ;
     }
 
+  if (model == PI_MODEL_M1p) {
+    wPinToGpio=wPinToGpioM1p;
+    i2cDevice=(char *)i2cDevices[2];
+  }
+  if (model == PI_MODEL_M2) {
+    wPinToGpio=wPinToGpioM2;
+    i2cDevice=(char *)i2cDevices[2];
+  }
   if (model == PI_MODEL_M2p) {
     wPinToGpio=wPinToGpioM2p;
     i2cDevice=(char *)i2cDevices[0];
   }
   if (model == PI_MODEL_M3) {
     wPinToGpio=wPinToGpioM3;
-    i2cDevice=(char *)i2cDevices[3];
+    i2cDevice=(char *)i2cDevices[2];
   }
 
     fd = open("/dev/mem", O_RDWR);
