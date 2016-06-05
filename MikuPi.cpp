@@ -19,6 +19,15 @@
 
 #include "MikuPi.h"
 
+char *i2cDevice;
+
+const char *i2cDevices[3] =
+{
+  "/dev/i2c-0",
+  "/dev/i2c-1",
+  "/dev/i2c-2"
+} ;
+
 const char *piModelNames [7] =
 {
   "Unknown",
@@ -180,8 +189,8 @@ void sayHello()
     else
     {
       printf ("BananaPi Details:\n") ;
-      printf ("  Type: %s, Memory: %dMB\n", 
-	  piModelNames [model], mem) ;
+      printf ("  Type: %s, Memory: %dMB\n", piModelNames [model], mem) ;
+      //printf ("  I2C Device: %s\n",i2cDevice) ;
     }
 }
 
@@ -202,14 +211,15 @@ void mikuPiSetup (void)
       printf ("    i@mikuq.com\n") ;
       piBoardRevOops ("with a copy of your /proc/cpuinfo if possible") ;
     }
-	if (model == PI_MODEL_M2p)
-    {
-		wPinToGpio=wPinToGpioM2p;
-    }
-	if (model == PI_MODEL_M3)
-    {
-		wPinToGpio=wPinToGpioM3;
-    }
+
+  if (model == PI_MODEL_M2p) {
+    wPinToGpio=wPinToGpioM2p;
+    i2cDevice=(char *)i2cDevices[0];
+  }
+  if (model == PI_MODEL_M3) {
+    wPinToGpio=wPinToGpioM3;
+    i2cDevice=(char *)i2cDevices[3];
+  }
 
     fd = open("/dev/mem", O_RDWR);
 

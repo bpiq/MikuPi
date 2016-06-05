@@ -14,6 +14,7 @@
  *
  */
 
+#include "MikuPi.h"
 #include "Wire.h"
 
 uint8 TwoWire::rxBuffer[BUFFER_LENGTH];
@@ -27,7 +28,7 @@ TwoWire::TwoWire()
 void TwoWire::requestFrom(int address, int quantity)
 {
   I2cError = 0;
-  if ((I2cDevHandle = open("/dev/i2c-0", O_RDWR)) < 0)  I2cError |= ERROR_I2C_OPEN;
+  if ((I2cDevHandle = open(i2cDevice, O_RDWR)) < 0)  I2cError |= ERROR_I2C_OPEN;
   else
   {
     if (ioctl(I2cDevHandle, I2C_SLAVE,address) < 0) I2cError |= ERROR_I2C_SETUP;					
@@ -47,7 +48,7 @@ void TwoWire::requestFrom(int address, int quantity)
 void TwoWire::beginTransmission(int address)
 {
   I2cError = 0;
-  if ((I2cDevHandle = open("/dev/i2c-0", O_RDWR)) < 0)  I2cError |= ERROR_I2C_OPEN;
+  if ((I2cDevHandle = open(i2cDevice, O_RDWR)) < 0)  I2cError |= ERROR_I2C_OPEN;
   else
   {
     if (ioctl(I2cDevHandle, I2C_SLAVE,address) < 0) I2cError |= ERROR_I2C_SETUP;					

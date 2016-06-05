@@ -27,9 +27,10 @@
 #define PI_MODEL_M3     5
 #define PI_MODEL_M2p    6
 
+extern char *i2cDevice;
 extern const int bPinTowPin[41];
 
-#define	VERSION "0.21"
+#define	VERSION "0.25"
 
 extern const char *piModelNames    [7] ;
 

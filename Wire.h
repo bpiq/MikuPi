@@ -25,7 +25,7 @@ class TwoWire
     void requestFrom(int, int);
     int available(void);
     int read(void);
-	void write(uint8);
+    void write(uint8);
 };
 
 extern TwoWire Wire;
