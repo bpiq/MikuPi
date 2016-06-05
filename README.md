@@ -41,6 +41,11 @@ sudo ./blink
  +-----+-----+---------+------+---+- BPI-M3 -+---+------+---------+-----+-----+
 </code></pre>
 
+1.(2016-05-30) start & sayhello
+2.(2016-06-02) gpio for M2+,M3 & blink
+3.(2016-06-04) update to C++ & add Relay
+4.(2016-06-05) add Wire & SHT2x 
+
 	git add .
 	git commit -a -m "md"
 	git push origin master
