@@ -1,4 +1,4 @@
-libMikuDuino.so : MikuPi.cpp MikuDuino.cpp MikuRelay.cpp MikuSHT2x.cpp Wire.cpp
+libMikuDuino.so : MikuPi.cpp MikuDuino.cpp MikuRelay.cpp MikuSHT2x.cpp Wire.cpp MikuOled.cpp
 	@gcc $^ -fPIC -shared -o $@
 	@install $@ /usr/lib/
 	@install *.h /usr/include/

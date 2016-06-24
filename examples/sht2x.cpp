@@ -11,12 +11,14 @@
 
 #include "MikuDuino.h"
 #include "MikuSHT2x.h"
+#include "Wire.h"
 
 Miku_SHT2x sht;
 
 void setup()
 {
   sayHello();
+  Wire.begin();
 }
 
 void loop()

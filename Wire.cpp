@@ -25,14 +25,17 @@ TwoWire::TwoWire()
 {
 }
 
-void TwoWire::requestFrom(int address, int quantity)
+void TwoWire::begin()
 {
   I2cError = 0;
   if ((I2cDevHandle = open(i2cDevice, O_RDWR)) < 0)  I2cError |= ERROR_I2C_OPEN;
-  else
-  {
+}
+
+void TwoWire::requestFrom(int address, int quantity)
+{
+  I2cError = 0;
     if (ioctl(I2cDevHandle, I2C_SLAVE,address) < 0) I2cError |= ERROR_I2C_SETUP;					
-  }
+  
   if(!I2cError)
   {
     if (::read(I2cDevHandle, rxBuffer,quantity) != quantity) I2cError |= ERROR_I2C_READ;	
@@ -42,22 +45,17 @@ void TwoWire::requestFrom(int address, int quantity)
       rxBufferLength = quantity;
     }	
   }
-  close(I2cDevHandle);
 }
 
 void TwoWire::beginTransmission(int address)
 {
   I2cError = 0;
-  if ((I2cDevHandle = open(i2cDevice, O_RDWR)) < 0)  I2cError |= ERROR_I2C_OPEN;
-  else
-  {
-    if (ioctl(I2cDevHandle, I2C_SLAVE,address) < 0) I2cError |= ERROR_I2C_SETUP;					
-  }	
+  if (ioctl(I2cDevHandle, I2C_SLAVE,address) < 0) I2cError |= ERROR_I2C_SETUP;					
 }
 
 void TwoWire::endTransmission()
 {
-  close(I2cDevHandle);
+  //close(I2cDevHandle);
 }
 
 void TwoWire::write(uint8 cmd)
@@ -65,6 +63,26 @@ void TwoWire::write(uint8 cmd)
   if(!I2cError)
   {
     if((::write(I2cDevHandle, &cmd, 1)) != 1) 	I2cError |= ERROR_I2C_WRITE;	
+  }
+}
+
+void TwoWire::write(uint8 reg, uint8 dat)
+{
+  uint8 buf[2];
+  buf[0]=reg;
+  buf[1]=dat;
+  if(!I2cError)
+  {
+    if((::write(I2cDevHandle, buf, 2)) != 2) 	I2cError |= ERROR_I2C_WRITE;	
+  }
+}
+
+void TwoWire::write(uint8* dat, int length)
+{
+  if(!I2cError)
+  {
+    //write(int handle, void *buf, int nbyte);
+    if((::write(I2cDevHandle, dat, length)) != length) 	I2cError |= ERROR_I2C_WRITE;	
   }
 }
 

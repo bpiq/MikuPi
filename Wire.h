@@ -20,12 +20,15 @@ class TwoWire
     int	I2cError;
   public:
     TwoWire();
+    void begin();
     void beginTransmission(int);
     void endTransmission(void);
     void requestFrom(int, int);
     int available(void);
     int read(void);
     void write(uint8);
+    void write(uint8,uint8);
+    void write(uint8*,int);
 };
 
 extern TwoWire Wire;
