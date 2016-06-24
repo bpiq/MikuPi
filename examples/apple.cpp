@@ -7,7 +7,7 @@
  *	Welcome to MikuQ.com! MikuDuino for BananaPi 
  *	
  *     by Uncle Li(kgogo@163.com) 2015-1
- *     by MikuQ(i@mikuq.com) 2016-6-25
+ *     modify MikuQ(i@mikuq.com) 2016-6-25
  *	
  * https://github.com/bpiq/MikuPi
  *

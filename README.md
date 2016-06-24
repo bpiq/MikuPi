@@ -46,6 +46,7 @@ sudo ./blink
 	3.(2016-06-04) update to C++ & add Relay
 	4.(2016-06-05) add Wire & SHT2x 
 	5.(2016-06-24) add MikuOLED
+	6.(2016-06-25) modify Uncle Li's BadApple
 
 upload
 
