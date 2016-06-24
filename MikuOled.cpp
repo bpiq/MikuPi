@@ -110,25 +110,10 @@ Wire.endTransmission();
 
 void Miku_Oled::display()
 { 
-
-
-	int k;
-
-
-
-
-	//for(k=0;k<1000;k++)
-	//{
-		Wire.beginTransmission(0x3c);
-		Wire.write(poscode,6);
-
-		Wire.write(buf,1025); 
-		Wire.endTransmission(); 
-
-
-
-	//}
-
+	Wire.beginTransmission(0x3c);
+	Wire.write(poscode,6);
+	Wire.write(buf,1025); 
+	Wire.endTransmission(); 
 }
 
 void Miku_Oled::shift()
@@ -155,10 +140,15 @@ void Miku_Oled::shift()
 
 void Miku_Oled::clearDisplay(void)
 {
-  memset(buffer, 0, 1024);
+	memset(buffer, 0, 1024);
 }
 
 void Miku_Oled::showLogo(void)
 {
-  memcpy(buffer, logo, 1024);
+	memcpy(buffer, logo, 1024);
+}
+
+void Miku_Oled::showBMP(uint8 *bmp)
+{
+	memcpy(buffer, bmp, 1024);
 }

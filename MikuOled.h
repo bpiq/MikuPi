@@ -73,6 +73,7 @@ class Miku_Oled {
   void display(void);
   void showLogo(void);
   void clearDisplay(void); 
+  void showBMP(uint8*);
  private:
   void oled_sendCommand(int);
   static uint8 buf[];

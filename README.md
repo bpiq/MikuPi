@@ -45,6 +45,7 @@ sudo ./blink
 	2.(2016-06-02) gpio for M2+,M3 & blink
 	3.(2016-06-04) update to C++ & add Relay
 	4.(2016-06-05) add Wire & SHT2x 
+	5.(2016-06-24) add MikuOLED
 
 upload
 
