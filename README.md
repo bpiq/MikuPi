@@ -47,6 +47,7 @@ sudo ./blink
 	4.(2016-06-05) add Wire & SHT2x 
 	5.(2016-06-24) add MikuOLED
 	6.(2016-06-25) modify Uncle Li's BadApple
+	7.(2016-07-02) add oled.drawText support ascii & gb2312
 
 upload
 

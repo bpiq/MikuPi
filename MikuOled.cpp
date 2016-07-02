@@ -1,4 +1,4 @@
-#include<string.h>
+#include <string.h>
 
 #include "MikuDuino.h"
 #include "Wire.h"
@@ -103,7 +103,6 @@ Wire.begin();
 Wire.beginTransmission(0x3c);
 Wire.write(initcode,29);
 Wire.endTransmission();
-
 }
 
 
@@ -141,6 +140,8 @@ void Miku_Oled::shift()
 void Miku_Oled::clearDisplay(void)
 {
 	memset(buffer, 0, 1024);
+	xpos=0;
+	ypos=0;
 }
 
 void Miku_Oled::showLogo(void)
@@ -151,4 +152,91 @@ void Miku_Oled::showLogo(void)
 void Miku_Oled::showBMP(uint8 *bmp)
 {
 	memcpy(buffer, bmp, 1024);
+}
+
+void Miku_Oled::setPos(uint8 x,uint8 y)
+{
+	if ((x>128)||(y>64))
+		return;
+	xpos=x;
+	ypos=y;
+}
+
+void Miku_Oled::drawPoint(uint8 x,uint8 y,uint8 c)
+{
+	if ((x>128)||(y>64))
+		return;
+	int p=y/8;
+	p=p*128+x;
+	int m=y%8;
+
+	if (c==0)
+  		buffer[p]&=~(uint8)(1<<m);
+	else
+  		buffer[p]|=(uint8)(1<<m); 
+}
+
+void Miku_Oled::drawText(const char* txt)
+{
+  FILE *fphzk;
+  fphzk=fopen("/usr/share/fonts/mikupi.font","rb");
+  int i,r,rr;
+  uint8 out[32];
+  for(i=0;i<strlen(txt);i++)
+  {
+    uint8 x=*(txt+i);
+    if (x<161)
+    {
+      if (x==10)
+      {
+        xpos=0;
+        ypos+=16;
+        continue;
+      }
+      if (x==13)
+      {
+        xpos=0;
+        continue;
+      }
+      if (xpos+8>128)
+      {
+        xpos=0;
+        ypos+=16;
+      }
+      fseek(fphzk, x*16, SEEK_SET);
+      r=fread(out,1,16,fphzk);
+
+      for(r=0;r<16;r++)
+      {
+        uint8 xxx=*(out+r);
+        for(rr=0;rr<8;rr++)
+	  drawPoint(xpos+rr,ypos+r,xxx&(1<<(7-rr)));
+      }
+      xpos+=8;
+      continue;
+    }
+
+    if (xpos+16>128)
+    {
+      xpos=0;
+      ypos+=16;
+    }
+
+    long p=(((*(txt+i))-161)*94+(*(txt+i+1))-161)*32+4096;
+    i++;
+    fseek(fphzk, p, SEEK_SET);
+    r=fread(out,1,32,fphzk);
+
+    for(r=0;r<16;r++)
+    {
+      uint8 xxx=*(out+r*2);
+      for(rr=0;rr<8;rr++)
+        drawPoint(xpos+rr,ypos+r,xxx&(1<<(7-rr)));
+      xxx=*(out+r*2+1);
+      for(rr=0;rr<8;rr++)
+	drawPoint(xpos+8+rr,ypos+r,xxx&(1<<(7-rr)));
+    }
+    xpos+=16;
+  }
+  fclose(fphzk);
 }

@@ -74,10 +74,14 @@ class Miku_Oled {
   void showLogo(void);
   void clearDisplay(void); 
   void showBMP(uint8*);
+  void setPos(uint8,uint8);
+  void drawPoint(uint8,uint8,uint8);
+  void drawText(const char*);
  private:
   void oled_sendCommand(int);
   static uint8 buf[];
   uint8 *buffer;
+  uint8 xpos,ypos;
 };
 
 

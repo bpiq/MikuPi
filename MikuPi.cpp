@@ -21,6 +21,8 @@
 
 char *i2cDevice;
 
+int hasRoot = TRUE;
+
 const char *i2cDevices[3] =
 {
   "/dev/i2c-0",
@@ -217,8 +219,10 @@ void mikuPiSetup (void)
     unsigned int addr_start, addr_offset;
     unsigned int PageSize, PageMask;
 
-	if (geteuid () != 0)
-		piBoardRevOops("MikuPiSetup: Must be root. (Did you forget sudo?)");
+	if (geteuid () != 0) {
+		hasRoot = FALSE;
+		//piBoardRevOops("MikuPiSetup: Must be root. (Did you forget sudo?)");
+	}
 
 	int model, mem;
 	piBoardId (&model, &mem);
@@ -246,6 +250,8 @@ void mikuPiSetup (void)
     i2cDevice=(char *)i2cDevices[2];
   }
 
+  if (hasRoot)
+  {
     fd = open("/dev/mem", O_RDWR);
 
     PageSize = sysconf(_SC_PAGESIZE);
@@ -266,10 +272,16 @@ void mikuPiSetup (void)
     SUNXI_PIO_LM_BASE += addr_offset;
 
     close(fd);
+  }
 }
 
 void pinMode(int pin, int mode)
 {
+  if (!hasRoot)
+  {
+	printf ("Warning! If u want control GPIO. Must be root. (Did you forget sudo?)\n") ;
+	return;
+  }
 	pin=wPinToGpio[pin];
 	unsigned int val = mode;
 	unsigned int cfg;
@@ -295,6 +307,11 @@ void pinMode(int pin, int mode)
 
 void digitalWrite(int pin, int value)
 {
+  if (!hasRoot)
+  {
+	printf ("Warning! If u want control GPIO. Must be root. (Did you forget sudo?)\n") ;
+	return;
+  }
 	pin=wPinToGpio[pin];
 	unsigned int val = value;
 	unsigned int bank = GPIO_BANK(pin);
