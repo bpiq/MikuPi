@@ -2,7 +2,8 @@
 
 	git clone https://github.com/bpiq/MikuPi.git
 	cd MikuPi
-	sudo make
+	make
+	sudo make install
 
 because Arduino based C++, update MikuDuino to C++, 2016-6-4
 
