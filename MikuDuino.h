@@ -2,6 +2,7 @@
 #define _MIKUDUINO_H_
 
 #include <stdio.h>
+#include <string.h>
 #include "MikuPi.h"
 
 #define D3    bPinTowPin[3]
@@ -35,5 +36,8 @@
 
 void setup();
 void loop();
+
+int lu_argc;
+char **lu_argv;
 
 #endif

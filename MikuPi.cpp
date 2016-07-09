@@ -33,12 +33,23 @@ const char *i2cDevices[3] =
 const char *piModelNames [7] =
 {
   "Unknown",
-  "BPI-M1 ",
-  "BPI-R1 ",
-  "BPI-M2 ",
+  "BPI-M1",
+  "BPI-R1",
+  "BPI-M2",
   "BPI-M1+",
-  "BPI-M3 ",
+  "BPI-M3",
   "BPI-M2+",
+} ;
+
+const char *piModelFullNames [7] =
+{
+  "Unknown",
+  "BananaPi-M1",
+  "BananaPi-R1",
+  "BananaPi-M2",
+  "BananaPi-M1+",
+  "BananaPi-M3",
+  "BananaPi-M2+",
 } ;
 
 int MikuPiDebug       = FALSE;
@@ -124,6 +135,53 @@ static void piBoardRevOops (const char *why)
   fprintf (stderr, " ->  You may want to check:\n") ;
   fprintf (stderr, " ->  http://MikuQ.com\n") ; 
   exit (EXIT_FAILURE) ;
+}
+
+int piCpuTemp(char* temp)
+{
+	int model, mem;
+	int iTemp=-300000;
+	strcpy(temp,"none");
+	piBoardId (&model, &mem);
+	FILE *tempFd;
+	switch(model)
+	{
+		case PI_MODEL_UNKNOWN:
+		case PI_MODEL_M2:
+		break;
+		case PI_MODEL_M1:
+		case PI_MODEL_M1p:
+		case PI_MODEL_R1:
+  			if ((tempFd = fopen ("/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/temp1_input", "r")) == NULL)
+			{
+    				printf("Unable to open /sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/temp1_input\n");
+				break;
+			}
+  			while (fgets (temp, 20, tempFd) != NULL)
+  			{
+				iTemp=atoi(temp);
+				float f=iTemp/1000.0f;
+				sprintf(temp,"%.1f",f); 
+				break;
+			}
+			fclose(tempFd);
+		break;
+		default:
+  			if ((tempFd = fopen ("/sys/class/thermal/thermal_zone0/temp", "r")) == NULL)
+			{
+    				printf("Unable to open /sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/temp1_input\n");
+				break;
+			}
+  			while (fgets (temp, 20, tempFd) != NULL)
+  			{
+				iTemp=atoi(temp)*1000;
+				float f=iTemp/1000.0f;
+				sprintf(temp,"%.0f",f); 
+				break;
+			}
+			fclose(tempFd);
+	}
+	return iTemp;
 }
 
 void piBoardId(int *model, int *mem)

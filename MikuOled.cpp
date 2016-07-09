@@ -1,9 +1,18 @@
-#include <string.h>
 
 #include "MikuDuino.h"
 #include "Wire.h"
 #include "MikuOled.h"
 
+/*
+ * MikuPi.cpp:
+ *
+ *	Welcome to MikuQ.com! MikuDuino for BananaPi 
+ *	
+ *     by MikuQ(i@mikuq.com)
+ *	
+ * https://github.com/bpiq/MikuPi
+ *
+ */
 
 uint8 Miku_Oled::buf[OLED_BUFFER_LENGTH+1];
 

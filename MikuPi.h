@@ -33,9 +33,11 @@ extern const int bPinTowPin[41];
 #define	VERSION "0.30"
 
 extern const char *piModelNames    [7] ;
+extern const char *piModelFullNames [7];
 
 void delay (unsigned int howLong);
 
+int piCpuTemp(char *temp);
 void piBoardId(int *model, int *mem);
 void sayHello();
 
