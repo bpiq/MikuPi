@@ -1,7 +1,8 @@
 #include "MikuDuino.h"
 #include "MikuOled.h"
 #include <stdio.h>
-#include<stdlib.h>
+#include <stdlib.h>
+
 /*
  * arg_oled.cpp:
  *
@@ -20,14 +21,14 @@
 Miku_Oled oled;
 char buf[20];
 
-void setup(int argc,char *argv[])
+void setup()
 {
 	sayHello();
 	oled.begin();
 	oled.clearDisplay();
 	int i;
-	for(i=1;i<argc;i++){
-		sprintf(buf,"%s\n",argv[i]);
+	for(i=1;i<lu_argc;i++){
+		sprintf(buf,"%s\n",lu_argv[i]);
 		oled.drawText(buf);
 		oled.display();
 	}

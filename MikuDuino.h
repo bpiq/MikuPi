@@ -37,7 +37,7 @@
 void setup();
 void loop();
 
-int lu_argc;
-char **lu_argv;
+extern int lu_argc;
+extern char **lu_argv;
 
 #endif

@@ -11,6 +11,9 @@
  *
  */
 
+int lu_argc;
+char **lu_argv;
+
 int main(int argc,char *argv[])
 {
   //by Small Lu(mo10), Sky Arrow's first son.
