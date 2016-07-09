@@ -33,7 +33,7 @@
 #define D38    bPinTowPin[38]
 #define D40    bPinTowPin[40]
 
-void setup();
+void setup(int argc,char *argv[]);
 void loop();
 
 #endif
