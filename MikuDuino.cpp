@@ -11,10 +11,10 @@
  *
  */
 
-int main()
+int main(int argc,char *argv[])
 {
   mikuPiSetup();
-  setup();
+  setup(argc,argv);
   while(1)
     loop();
 }
