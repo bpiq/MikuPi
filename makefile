@@ -1,11 +1,20 @@
-libMikuDuino.so : MikuPi.cpp MikuDuino.cpp MikuRelay.cpp MikuSHT2x.cpp Wire.cpp MikuOled.cpp
-	@gcc $^ -fPIC -shared -o $@
-	@install $@ /usr/lib/
-	@install *.h /usr/include/
-	@install fonts/mikupi.font /usr/share/fonts
-	@rm -f *.so
-	@echo 'install OK!'
-.PHONY : clean
-clean :
-	@rm -f *.so
-	@echo 'clean'
+CC              := gcc
+LD              := ld
+CFLAGS          :=
+LDFLAGS         := -shared -fpic
+SOURCE          := MikuPi.cpp MikuDuino.cpp MikuRelay.cpp MikuSHT2x.cpp Wire.cpp MikuOled.cpp
+OBJS            := $(patsubst %.cpp,%.o,$(SOURCE))
+TARGET_LIB      := libMikuDuino.so
+
+all:$(OBJS)
+	@echo $(OBJS)
+	$(LD) $(LDFLAGS) -o  $(TARGET_LIB) $(OBJS) 
+
+%.o:%.cpp
+	@echo Compiling $< ...
+	$(CC) -c $(CFLAGS)  $< -o $*.o
+
+.PHONY: clean
+
+clean:
+	rm *.so *.o -rf
