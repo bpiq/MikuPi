@@ -25,6 +25,7 @@ void setup()
 {
 	sayHello();
 	oled.begin();
+        oled.setEncoding(UTF8);
 	oled.clearDisplay();
 	int i;
 	for(i=1;i<lu_argc;i++){

@@ -1,7 +1,8 @@
-
 #include "MikuDuino.h"
 #include "Wire.h"
 #include "MikuOled.h"
+#include <iconv.h>
+#include <string.h>
 
 /*
  * MikuPi.cpp:
@@ -13,6 +14,23 @@
  * https://github.com/bpiq/MikuPi
  *
  */
+
+int UTF8toGB2312(char *sourcebuf,char *destbuf) 
+{   
+  iconv_t cd;   
+  size_t sourcelen,destlen;
+  sourcelen=strlen(sourcebuf)+1;
+  destlen=sourcelen*4;
+  if ((cd = iconv_open("gb2312","utf-8")) ==0)     
+    return -1;  
+  if(-1 == iconv(cd,&sourcebuf,&sourcelen,&destbuf,&destlen)) 
+  {    
+    perror("iconv");
+    return -2;  
+  } 
+  iconv_close(cd);   
+  return 0;   
+}
 
 uint8 Miku_Oled::buf[OLED_BUFFER_LENGTH+1];
 
@@ -98,12 +116,18 @@ Miku_Oled::Miku_Oled()
 {
   buffer=buf+1;
   buf[0]=0x40;
+  encoding=GB2312;
   showLogo();
 }
 
 void Miku_Oled::oled_sendCommand(int c)
 {
     Wire.write((uint8)0,(uint8)c);
+}
+
+void Miku_Oled::setEncoding(uint8 code)
+{
+    encoding=code;
 }
 
 void Miku_Oled::begin()
@@ -185,15 +209,22 @@ void Miku_Oled::drawPoint(uint8 x,uint8 y,uint8 c)
   		buffer[p]|=(uint8)(1<<m); 
 }
 
-void Miku_Oled::drawText(const char* txt)
+void Miku_Oled::drawText(char* txt)
 {
+  char mytxt[256];
+
+  if (encoding==UTF8)
+    UTF8toGB2312(txt,mytxt);
+  else
+    memcpy(mytxt, txt, strlen(txt)+1);
+
   FILE *fphzk;
   fphzk=fopen("/usr/share/fonts/mikupi.font","rb");
   int i,r,rr;
   uint8 out[32];
-  for(i=0;i<strlen(txt);i++)
+  for(i=0;i<strlen(mytxt);i++)
   {
-    uint8 x=*(txt+i);
+    uint8 x=*(mytxt+i);
     if (x<161)
     {
       if (x==10)
@@ -231,7 +262,7 @@ void Miku_Oled::drawText(const char* txt)
       ypos+=16;
     }
 
-    long p=(((*(txt+i))-161)*94+(*(txt+i+1))-161)*32+4096;
+    long p=(((*(mytxt+i))-161)*94+(*(mytxt+i+1))-161)*32+4096;
     i++;
     fseek(fphzk, p, SEEK_SET);
     r=fread(out,1,32,fphzk);

@@ -18,6 +18,8 @@
 #define       INPUT_PULLUP	(2)
 #define       OUTPUT	(1)
 
+#define       GB2312 (0)
+#define       UTF8 (1)
 
 #define	PI_MODEL_UNKNOWN	0
 #define	PI_MODEL_M1		1
