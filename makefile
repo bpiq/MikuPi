@@ -1,6 +1,6 @@
 CC              := gcc
 LD              := ld
-CFLAGS          :=
+CFLAGS          := -fPIC
 LDFLAGS         := -shared -fpic
 SOURCE          := MikuPi.cpp MikuDuino.cpp MikuRelay.cpp MikuSHT2x.cpp Wire.cpp MikuOled.cpp
 HEADER          := $(wildcard *.h)
