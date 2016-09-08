@@ -25,6 +25,6 @@ install:
 	install $(FONT) $(INSTALL_FONT)
 	install $(TARGET_LIB) $(INSTALL_LIB)
 	install $(HEADER) $(INSTALL_INCLUDE)
-
+	@rm *.so *.o -rf
 clean:
 	rm *.so *.o -rf
