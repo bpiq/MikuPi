@@ -1,4 +1,6 @@
+!.gitignore
+!/examples/makefile
 /*.o
 /*.so
-/examples/*.
-!/examples/makefile
+/examples/*
+
