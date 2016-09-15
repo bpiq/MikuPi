@@ -2,5 +2,4 @@
 !/examples/makefile
 /*.o
 /*.so
-/examples/*
 
