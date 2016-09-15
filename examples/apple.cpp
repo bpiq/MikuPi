@@ -14,7 +14,7 @@
  */
 
 #define BUFFER_SIZE 1024
-uint8 buffer[BUFFER_SIZE];
+uint8_t buffer[BUFFER_SIZE];
 
 Miku_Oled oled;
 

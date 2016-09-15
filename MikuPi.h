@@ -32,7 +32,7 @@
 extern char *i2cDevice;
 extern const int bPinTowPin[41];
 
-#define	VERSION "0.30"
+#define	VERSION "0.31"
 
 extern const char *piModelNames    [7] ;
 extern const char *piModelFullNames [7];

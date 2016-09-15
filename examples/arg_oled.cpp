@@ -1,7 +1,5 @@
 #include "MikuDuino.h"
 #include "MikuOled.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 /*
  * arg_oled.cpp:

@@ -32,7 +32,7 @@ int UTF8toGB2312(char *sourcebuf,char *destbuf)
   return 0;   
 }
 
-uint8 Miku_Oled::buf[OLED_BUFFER_LENGTH+1];
+uint8_t Miku_Oled::buf[OLED_BUFFER_LENGTH+1];
 
 const char logo[]={
 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
@@ -120,12 +120,7 @@ Miku_Oled::Miku_Oled()
   showLogo();
 }
 
-void Miku_Oled::oled_sendCommand(int c)
-{
-    Wire.write((uint8)0,(uint8)c);
-}
-
-void Miku_Oled::setEncoding(uint8 code)
+void Miku_Oled::setEncoding(uint8_t code)
 {
     encoding=code;
 }
@@ -144,6 +139,9 @@ void Miku_Oled::display()
 { 
 	Wire.beginTransmission(0x3c);
 	Wire.write(poscode,6);
+	Wire.endTransmission(); 
+
+	Wire.beginTransmission(0x3c);
 	Wire.write(buf,1025); 
 	Wire.endTransmission(); 
 }
@@ -182,12 +180,12 @@ void Miku_Oled::showLogo(void)
 	memcpy(buffer, logo, 1024);
 }
 
-void Miku_Oled::showBMP(uint8 *bmp)
+void Miku_Oled::showBMP(uint8_t *bmp)
 {
 	memcpy(buffer, bmp, 1024);
 }
 
-void Miku_Oled::setPos(uint8 x,uint8 y)
+void Miku_Oled::setPos(uint8_t x,uint8_t y)
 {
 	if ((x>128)||(y>64))
 		return;
@@ -195,7 +193,7 @@ void Miku_Oled::setPos(uint8 x,uint8 y)
 	ypos=y;
 }
 
-void Miku_Oled::drawPoint(uint8 x,uint8 y,uint8 c)
+void Miku_Oled::drawPoint(uint8_t x,uint8_t y,uint8_t c)
 {
 	if ((x>128)||(y>64))
 		return;
@@ -204,9 +202,9 @@ void Miku_Oled::drawPoint(uint8 x,uint8 y,uint8 c)
 	int m=y%8;
 
 	if (c==0)
-  		buffer[p]&=~(uint8)(1<<m);
+  		buffer[p]&=~(uint8_t)(1<<m);
 	else
-  		buffer[p]|=(uint8)(1<<m); 
+  		buffer[p]|=(uint8_t)(1<<m); 
 }
 
 void Miku_Oled::drawText(char* txt)
@@ -221,10 +219,10 @@ void Miku_Oled::drawText(char* txt)
   FILE *fphzk;
   fphzk=fopen("/usr/share/fonts/mikupi.font","rb");
   int i,r,rr;
-  uint8 out[32];
+  uint8_t out[32];
   for(i=0;i<strlen(mytxt);i++)
   {
-    uint8 x=*(mytxt+i);
+    uint8_t x=*(mytxt+i);
     if (x<161)
     {
       if (x==10)
@@ -248,7 +246,7 @@ void Miku_Oled::drawText(char* txt)
 
       for(r=0;r<16;r++)
       {
-        uint8 xxx=*(out+r);
+        uint8_t xxx=*(out+r);
         for(rr=0;rr<8;rr++)
 	  drawPoint(xpos+rr,ypos+r,xxx&(1<<(7-rr)));
       }
@@ -269,7 +267,7 @@ void Miku_Oled::drawText(char* txt)
 
     for(r=0;r<16;r++)
     {
-      uint8 xxx=*(out+r*2);
+      uint8_t xxx=*(out+r*2);
       for(rr=0;rr<8;rr++)
         drawPoint(xpos+rr,ypos+r,xxx&(1<<(7-rr)));
       xxx=*(out+r*2+1);

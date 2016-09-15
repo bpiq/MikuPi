@@ -1,12 +1,15 @@
 #ifndef _MIKU_TYPES_H_
 #define _MIKU_TYPES_H_
 
-typedef unsigned char     uint8;
-typedef unsigned short    uint16;
-typedef unsigned long     uint32;
+#include <stdint.h>
 
-typedef signed char       int8;
-typedef signed short      int16;
-typedef signed long       int32;
+#define min(a,b) ((a)<(b)?(a):(b))
+#define max(a,b) ((a)>(b)?(a):(b))
+#define abs(x) ((x)>0?(x):-(x))
+#define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
+#define round(x)     ((x)>=0?(long)((x)+0.5):(long)((x)-0.5))
+#define radians(deg) ((deg)*DEG_TO_RAD)
+#define degrees(rad) ((rad)*RAD_TO_DEG)
+#define sq(x) ((x)*(x))
 
 #endif

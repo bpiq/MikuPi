@@ -17,7 +17,7 @@ typedef enum {
 class Miku_SHT2x
 {
   private:
-    uint16 readSensor(uint8 command);
+    uint16_t readSensor(uint8_t command);
 
   public:
     float GetHumidity(void);

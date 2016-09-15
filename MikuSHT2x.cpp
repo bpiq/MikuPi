@@ -24,9 +24,9 @@ float Miku_SHT2x::GetTemperature(void)
   return (-46.85 + 175.72 / 65536.0 * (float)(readSensor(eTempHoldCmd)));
 }
 
-uint16 Miku_SHT2x::readSensor(uint8 command)
+uint16_t Miku_SHT2x::readSensor(uint8_t command)
 {
-    uint16 result;
+    uint16_t result;
 
     Wire.beginTransmission(eSHT2xAddress);
     Wire.write(command);

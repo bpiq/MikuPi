@@ -13,6 +13,16 @@ gcc -Wall -o blink blink.cpp -lMikuDuino
 sudo ./blink
 </code></pre>
 
+or
+
+<pre><code>
+cd examples
+make
+sudo ./blink
+</code></pre>
+
+more help: https://help.mikuduino.com/
+
 <pre><code>
  +-----+-----+---------+------+---+- MikuPi -+---+------+---------+-----+-----+
  | CPU | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | CPU |
@@ -49,6 +59,7 @@ sudo ./blink
 	5.(2016-06-24) add MikuOLED
 	6.(2016-06-25) modify Uncle Li's BadApple
 	7.(2016-07-02) add oled.drawText support ascii & gb2312
+	8.(2016-09-15) fix wire class & add pwm class
 
 upload
 
