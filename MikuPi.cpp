@@ -30,7 +30,7 @@ const char *i2cDevices[3] =
   "/dev/i2c-2"
 } ;
 
-const char *piModelNames [7] =
+const char *piModelNames [9] =
 {
   "Unknown",
   "BPI-M1",
@@ -39,9 +39,10 @@ const char *piModelNames [7] =
   "BPI-M1+",
   "BPI-M3",
   "BPI-M2+",
+  "BPI-M2U",
 } ;
 
-const char *piModelFullNames [7] =
+const char *piModelFullNames [9] =
 {
   "Unknown",
   "BananaPi-M1",
@@ -50,6 +51,7 @@ const char *piModelFullNames [7] =
   "BananaPi-M1+",
   "BananaPi-M3",
   "BananaPi-M2+",
+  "BananaPi-M2U",
 } ;
 
 int MikuPiDebug       = FALSE;
@@ -86,6 +88,14 @@ static int wPinToGpioM3 [32] =
 	229,228,67,234,		64,65,66,32, 
 	33,-1,-1,-1,		-1,82,202,203, 
 	204,132,205,133,	146,147,227,226
+} ;
+
+static int wPinToGpioM2u [32] =
+{
+	276,273,277,249,	272,250,251,35, 
+	53,52,87,248,		64,65,66,274, 
+	275,-1,-1,-1,		-1,224,225,226, 
+	227,228,116,231,	230,229,257,256
 } ;
 
 const int bPinTowPin[41] =
@@ -225,6 +235,12 @@ void piBoardId(int *model, int *mem)
 		  *model = PI_MODEL_M3;
 		  *mem = 2048;
 	  }
+	  if (strstr(line,"sun8iw11p1") != NULL)
+	  {
+		  //R40-M2U
+		  *model = PI_MODEL_M2u;
+		  *mem = 2048;
+	  }
     if (MikuPiDebug)
 	{
       printf ("Hardware:%s\n",line) ;
@@ -302,6 +318,10 @@ void mikuPiSetup (void)
   if (model == PI_MODEL_M2p) {
     wPinToGpio=wPinToGpioM2p;
     i2cDevice=(char *)i2cDevices[0];
+  }
+  if (model == PI_MODEL_M2u) {
+    wPinToGpio=wPinToGpioM2u;
+    i2cDevice=(char *)i2cDevices[2];
   }
   if (model == PI_MODEL_M3) {
     wPinToGpio=wPinToGpioM3;

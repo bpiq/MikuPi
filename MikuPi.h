@@ -28,14 +28,15 @@
 #define	PI_MODEL_M1p	4
 #define PI_MODEL_M3     5
 #define PI_MODEL_M2p    6
+#define PI_MODEL_M2u    7
 
 extern char *i2cDevice;
 extern const int bPinTowPin[41];
 
 #define	VERSION "0.31"
 
-extern const char *piModelNames    [7] ;
-extern const char *piModelFullNames [7];
+extern const char *piModelNames    [9] ;
+extern const char *piModelFullNames [9];
 
 void delay (unsigned int howLong);
 
